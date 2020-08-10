@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="test"></div>
+  <!-- 引入react核心库 -->
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <!-- 引入react-dom -->
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <!-- 引入babel -->
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    class Life extends React.Component {
+      state = {
+        opacity: 1
+      }
+      componentDidMount() {
+        this.timer = setInterval(() => {
+          let { opacity } = this.state
+          opacity -= 0.1
+          if (opacity <= 0) opacity = 1
+          this.setState({ opacity })
+        }, 200)
+      }
+      componentWillUnmount() {
+        clearInterval(this.timer)
+      }
+      death = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+      }
+      render() {
+        const {opacity}=this.state
+        return (
+          <div>
+            <h1 style={{ opacity }}> hhhh</h1>
+            <button onClick={this.death}></button>
+          </div>
+        )
+      }
+
+    }
+    ReactDOM.render(<Life />, document.getElementById('test'))
+  </script>
+</body>
+
+</html>
